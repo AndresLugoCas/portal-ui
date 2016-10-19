@@ -35,7 +35,7 @@ const EntityPageHorizontalTable = ({ style, title, rightComponent, headings, dat
         ...style,
       }}
     >
-      <h3
+      {title && <h3
         style={{
           color: theme.greyScale7,
           width: '100%',
@@ -49,7 +49,7 @@ const EntityPageHorizontalTable = ({ style, title, rightComponent, headings, dat
           display: 'flex',
           justifyContent: 'space-between',
         }}
-      >{title} {rightComponent}</h3>
+      >{title} {rightComponent}</h3>}
       {data.length ? (
         <Table
           style={styles.table}
