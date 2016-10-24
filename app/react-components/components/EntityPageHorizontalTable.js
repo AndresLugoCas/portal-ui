@@ -53,7 +53,7 @@ const EntityPageHorizontalTable = ({ style, title, rightComponent, headings, dat
       {data.length ? (
         <Table
           style={styles.table}
-          headings={headings.map(h => <Th key={h.title}>{h.title}</Th>)}
+          headings={headings.map(h => <Th key={h.key}>{h.title}</Th>)}
           body={
             <tbody>
             {data.map((d, i) => {

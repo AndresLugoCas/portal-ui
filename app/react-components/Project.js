@@ -13,6 +13,9 @@ import EntityPageVerticalTable from './components/EntityPageVerticalTable';
 import EntityPageHorizontalTable from './components/EntityPageHorizontalTable';
 import CountCard from './components/CountCard';
 
+import BarChart from './charts/BarChart';
+import theme from './theme';
+
 let Project = (() => {
   const icon = '';
   const active = '';
@@ -46,8 +49,22 @@ let Project = (() => {
     },
   }
 
-  return ({ $scope }) => (
-    <Column style={styles.container}>
+  return ({ $scope, mutatedGenesProject, numCasesAggByProject }) => {
+    console.log(numCasesAggByProject);
+    const mutatedGenesChartData = mutatedGenesProject.map(g => (
+      {
+        'gene_id': g.gene_id,
+        'symbol': g.symbol,
+        'cytoband': 'tbd',
+        'num_affected_cases_project': g.case.filter(c => c.project.project_id === $scope.project.project_id).length,
+        'num_affected_cases_all': g.case.length,
+        'mutsig_score': 'tbd',
+        'num_mutations': g.case.reduce((acc, c) =>  acc + c.ssm.length, 0),
+        'annotations': 'tbd',
+      }
+    ));
+    const totalNumCases = Object.keys(numCasesAggByProject).reduce((sum, b) => sum + numCasesAggByProject[b], 0);
+    return (<Column style={styles.container}>
       <Row style={{
         justifyContent: 'space-between',
         marginBottom: '2rem'
@@ -151,10 +168,52 @@ let Project = (() => {
           />
         </span>
       </Row>
+      <Column>
+          <h3>Most Frequently Mutated Genes</h3>
+      </Column>
+      <Column style={{...styles.column, paddingBottom: '2.5rem'}}>
+        {mutatedGenesChartData.length ? (<div><BarChart
+              data={mutatedGenesChartData.map(g => ({label: g.symbol, value: (g.num_affected_cases_project / numCasesAggByProject[$scope.project.project_id] * 100)}))}
+              yAxis={{ title: '% of Cases Affected' }}
+              styles={{
+                xAxis: {stroke: theme.greyScale4, textFill: theme.greyScale3},
+                yAxis: {stroke: theme.greyScale4, textFill: theme.greyScale3},
+                bars: {fill: theme.secondary},
+                tooltips: {
+                  fill: '#fff',
+                  stroke: theme.greyScale4,
+                  textFill: theme.greyScale3
+                }
+              }}
+            />
 
+          <EntityPageHorizontalTable
+              headings={[
+                { key: 'symbol', title: 'Symbol' },
+                { key: 'cytoband', title: 'Cytoband' },
+                {
+                  key: 'num_affected_cases_project',
+                  title: (<span># Affected Cases<br />in {$scope.project.project_id}</span>),
+                },
+                {
+                  key: 'num_affected_cases_all',
+                  title: (<span># Affected Cases<br />in All Projects</span>),
+                },
+                { key: 'mutsig_score', title: 'MutSig Score'},
+                { key: 'num_mutations', title: '# Mutations'},
+                { key: 'annotations', title: 'Annotations'},
+              ]}
+              data={mutatedGenesChartData.map(g => ({
+                ...g,
+                symbol: <a href={`/genes/${g.gene_id}`}>{g.symbol}</a>,
+                num_affected_cases_project: `${g.num_affected_cases_project} / ${numCasesAggByProject[$scope.project.project_id]} (${(g.num_affected_cases_project/numCasesAggByProject[$scope.project.project_id]*100).toFixed(2)}%)`,
+                num_affected_cases_all: `${g.num_affected_cases_all} / ${totalNumCases} (${(g.num_affected_cases_all/totalNumCases * 100).toFixed(2)}%)`,
+              }))}
+          /></div>) : 'No mutated gene data to display'}
+      </Column>
       <OncoGridWrapper />
-    </Column>
-  );
+    </Column>);
+  };
 })()
 
 export default Project;
