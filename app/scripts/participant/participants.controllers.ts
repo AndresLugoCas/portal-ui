@@ -176,7 +176,6 @@ module ngApp.participants.controllers {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(">>>", data);
           this.frequentMutations = data.hits.hits;
           this.renderReact();
         });
@@ -219,18 +218,22 @@ module ngApp.participants.controllers {
         consequence_type: x.consequence.find(x => x.transcript.is_canonical).transcript.consequence_type
       }));
 
-      let el = document.getElementById('frequent-mutations');
+      let el = document.getElementById('react-root');
 
       if (el) {
         ReactDOM.render(
-          React.createElement(ReactComponents.FrequentMutations, {
-            $scope: this,
-            numCasesAggByProject,
-            frequentMutations,
-            totalNumCases,
-            project: this.participant.project.project_id,
-          }),
-          document.getElementById('frequent-mutations')
+          React.createElement(ReactComponents.SideNavLayout, {
+              links: [
+                { icon: 'table', id: 'summary', title: 'Summary' },
+              ],
+              title: this.participant.case_id,
+              entityType: 'CA',
+            },
+            React.createElement(ReactComponents.Case, {
+              $scope: this,
+            })
+          ),
+          el
         );
       }
     }
