@@ -9,7 +9,7 @@ import { exitFullScreen, enterFullScreen } from '../utils/fullscreen';
 import { StepLegend, SwatchLegend } from '../components/Legends';
 import getQueries from './getQueries';
 import SelectOverlay from './SelectOverlay';
-import downloadSvg from '../utils/download-svg';
+import downloadSvg from 'download-svg';
 import oncoGridParams from './oncoGridParams';
 import { gridReducer, initialGridState } from './gridReducer';
 

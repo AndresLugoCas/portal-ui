@@ -5,6 +5,7 @@ import FileIcon from 'react-icons/lib/fa/file-o';
 import CaseIcon from 'react-icons/lib/fa/user';
 import EditIcon from 'react-icons/lib/fa/edit';
 import _ from 'lodash';
+import downloadSvg from 'download-svg';
 
 // Custom
 import Column from './uikit/Flex/Column';
@@ -21,7 +22,6 @@ import theme from './theme';
 import OncoGridWrapper from './oncogrid/OncoGridWrapper';
 import SurvivalPlotWrapper from './components/SurvivalPlotWrapper';
 import Button from './Button';
-import downloadSvg from './utils/download-svg';
 
 const SPACING = '2rem';
 const HALF_SPACING = '1rem';
@@ -340,6 +340,7 @@ const Project = ({
               <div>
                 <Row style={{ padding: `0 2rem` }}>
                   <BarChart
+                    id="mutated-genes-chart"
                     data={mutatedGenesChartData.map(g => ({
                       label: g.symbol,
                       value: (g.num_affected_cases_project / numCasesAggByProject[project.project_id] * 100),

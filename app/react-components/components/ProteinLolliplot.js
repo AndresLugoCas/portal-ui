@@ -1,11 +1,12 @@
 import React from 'react';
+import downloadSvg from 'download-svg';
+import moment from 'moment';
+
 import Column from '../uikit/Flex/Column';
 import Row from '../uikit/Flex/Row';
 import Button from '../Button';
 import withDropdown from '../uikit/withDropdown';
-import downloadSvg from '../utils/download-svg';
 import saveFile from '../utils/filesaver';
-import moment from 'moment'
 
 export const zDepth1 = {
   boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)',

@@ -7,6 +7,7 @@ import EditIcon from 'react-icons/lib/fa/edit';
 import CartIcon from 'react-icons/lib/fa/shopping-cart';
 import SearchIcon from 'react-icons/lib/fa/search';
 import _ from 'lodash';
+import downloadSvg from 'download-svg';
 
 // Custom
 import Column from './uikit/Flex/Column';
@@ -22,7 +23,6 @@ import { ExternalLink } from './uikit/Links';
 import BarChart from './charts/BarChart';
 import theme from './theme';
 import externalReferenceLinks from './utils/externalReferenceLinks';
-import downloadSvg from './utils/download-svg';
 
 export const zDepth1 = {
   boxShadow: '0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)',

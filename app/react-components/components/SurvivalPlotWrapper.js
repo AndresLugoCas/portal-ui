@@ -3,11 +3,11 @@ import { SurvivalPlot } from './SurvivalPlot'; // this component should be merge
 import { compose, lifecycle, withState } from 'recompose';
 import _ from 'lodash';
 import { scaleOrdinal, schemeCategory10 } from 'd3';
+import downloadSvg from 'download-svg';
 
 import Column from '../uikit/Flex/Column';
 import Row from '../uikit/Flex/Row';
 import Button from '../Button';
-import downloadSvg from '../utils/download-svg';
 
 const colors = scaleOrdinal(schemeCategory10);
 

@@ -96,6 +96,7 @@
     "@oncojs/sapien": "^0.3.1",
     "@oncojs/survivalplot": "^0.3.0",
     "d3": "^4.2.7",
+    "download-svg": "0.0.7",
     "fela": "3.0.1",
     "filesaver.js": "^0.2.0",
     "jquery": "^3.1.1",
