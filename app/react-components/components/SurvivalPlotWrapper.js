@@ -160,7 +160,7 @@ class SurvivalPlotWrapper extends Component {
             </Button>
             <Button
               style={styles.button}
-              onClick={() => this.reset()}
+              onClick={() => this.setState(this.resetXDomain())}
             >
               <i className="fa fa-undo" /><span style={styles.hidden}>reload</span>
             </Button>
