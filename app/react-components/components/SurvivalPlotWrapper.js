@@ -40,6 +40,25 @@ const styles = {
   },
 };
 
+function onMouseEnterDonor(e, donor) {
+  const tooltip = document.querySelector('.global-tooltip');
+  tooltip.classList.add('active');
+  tooltip.innerHTML = `
+    ${donor.id}<br>
+    Survival Rate: ${Math.round(donor.survivalEstimate * 100)}%<br>
+    ${donor.censored ? `Interval of last follow-up: ${donor.time}` : `Time of Death: ${donor.time}`}
+  `;
+}
+
+function onMouseLeaveDonor() {
+  const tooltip = document.querySelector('.global-tooltip');
+  tooltip.classList.remove('active');
+}
+
+function onClickDonor(e, donor) {
+  window.location = `/cases/${donor.id}`
+}
+
 function processData(dataSet, id) {
   return {
     meta: { id },
@@ -47,6 +66,7 @@ function processData(dataSet, id) {
       interval.donors.map(donor =>
         _.extend({}, donor, {
           survivalEstimate: interval.cumulativeSurvival,
+          id: donor.meta.id
         })
       )
     )),
@@ -152,9 +172,9 @@ class SurvivalPlotWrapper extends Component {
         yAxisLabel: 'Survival Rate',
         height: isFullScreen(container) ? (window.innerHeight - 100) : height,
         getSetSymbol,
-        onMouseEnterDonor: () => {},
-        onMouseLeaveDonor: () => {},
-        onClickDonor: () => {},
+        onMouseEnterDonor,
+        onMouseLeaveDonor,
+        onClickDonor,
         onDomainChange,
         margins,
       });
