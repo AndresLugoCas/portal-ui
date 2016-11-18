@@ -6,8 +6,8 @@ import { scaleOrdinal, schemeCategory10 } from 'd3';
 
 import Column from '../uikit/Flex/Column';
 import Row from '../uikit/Flex/Row';
-import Button from '../Button';
 import downloadSvg from '../utils/download-svg';
+import Button from '../uikit/Button';
 
 const colors = scaleOrdinal(schemeCategory10);
 

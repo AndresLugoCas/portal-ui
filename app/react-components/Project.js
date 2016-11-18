@@ -20,8 +20,8 @@ import BarChart from './charts/BarChart';
 import theme from './theme';
 import OncoGridWrapper from './oncogrid/OncoGridWrapper';
 import SurvivalPlotWrapper from './components/SurvivalPlotWrapper';
-import Button from './Button';
 import downloadSvg from './utils/download-svg';
+import Button from './uikit/Button';
 
 const SPACING = '2rem';
 const HALF_SPACING = '1rem';
