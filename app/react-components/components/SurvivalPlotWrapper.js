@@ -6,8 +6,9 @@ import { scaleOrdinal, schemeCategory10 } from 'd3';
 
 import Column from '../uikit/Flex/Column';
 import Row from '../uikit/Flex/Row';
-import downloadSvg from '../utils/download-svg';
 import Button from '../uikit/Button';
+import DownloadVisualizationButton from './DownloadVisualizationButton'
+import ToolTip from '../uikit/Tooltip';
 
 const colors = scaleOrdinal(schemeCategory10);
 
@@ -37,7 +38,7 @@ const styles = {
     bottom: 0,
     left: 0,
     fontSize: '1.1rem',
-  }
+  },
 }
 const map = {
   defaultId: 'b8a57661-67d1-45d2-a9aa-b9a7a12b12ff'
@@ -148,26 +149,21 @@ class SurvivalPlotWrapper extends Component {
             Survival Plot
           </h1>
           <span style={{textAlign: 'right'}}>
-            <Button
-              style={styles.button}
-              onClick={
-                () => {
-                  downloadSvg({
-                    svg: this.container.querySelector('svg'),
-                    stylePrefix: '.survival-plot',
-                    fileName: 'survival-plot.svg',
-                  });
-                }
-              }
-            >
-              <i className="fa fa-download" /><span style={styles.hidden}>reload</span>
-            </Button>
-            <Button
-              style={styles.button}
-              onClick={() => this.reset()}
-            >
-              <i className="fa fa-undo" /><span style={styles.hidden}>reload</span>
-            </Button>
+            <ToolTip innerHTML="Download SurvivalPlot data or image">
+              <DownloadVisualizationButton 
+                svg={`.survival-plot svg`} // TODO: make sure this selects the correct survivalplot
+                data={data}
+                stylePrefix=".survival-plot"
+                slug="survival-plot"
+                noText={true}
+              />
+            </ToolTip>
+            <ToolTip innerHTML="Reload SurvivalPlot">
+              <Button
+                style={styles.button}
+                onClick={() => this.reset()}
+              ><i className="fa fa-undo" /><div style={styles.hidden}>Reset</div></Button>
+            </ToolTip>
           </span>
           {pValue && <span style={styles.pValue}>Log-Rank Test P-Value = {pValue}</span>}
         </Column>

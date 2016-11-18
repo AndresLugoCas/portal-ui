@@ -21,6 +21,7 @@ import { ExternalLink } from './uikit/Links';
 import externalReferenceLinks from './utils/externalReferenceLinks';
 import BarChart from './charts/BarChart';
 import theme from './theme';
+import DownloadVisualizationButton from './components/DownloadVisualizationButton';
 
 let Mutation = (() => {
   const styles = {
@@ -264,11 +265,19 @@ let Mutation = (() => {
               />
             </Row>
           </Column>
-          <Column style={{...styles.card, marginTop: `2rem` }}>
-            <h1 id="cancer-distribution" style={{...styles.heading, padding: `1rem` }}>
-              <i className="fa fa-bar-chart-o" style={{ marginRight: `1rem` }} />
-              Cancer Distribution
-            </h1>
+          <Column style={{...styles.card, marginTop: `2rem` }} id="cancer-distribution">
+            <Row>
+              <h1 style={{...styles.heading, padding: `1rem` }}>
+                <i className="fa fa-bar-chart-o" style={{ marginRight: `1rem` }} />
+                Cancer Distribution
+              </h1>
+              <DownloadVisualizationButton
+                style={{ padding: '1rem' }}
+                svg={sortedCancerDistData.length >= 5 ? '#cancer-distribution svg' : ''}
+                data={sortedCancerDistData}
+                slug="bar-chart"
+              />
+            </Row>
             <h5 style={{textTransform: 'uppercase', padding: `0 2rem`}}>
               This mutation affects&nbsp;
               {sortedCancerDistData.reduce((acc, d) => [...acc, ...d.cases], []).length} distinct cases across&nbsp;
