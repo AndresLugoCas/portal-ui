@@ -42,6 +42,7 @@ let FrequentMutations = ({
       <div>
         <Row style={{paddingBottom: '2.5rem'}}>
           <span>
+            <div style={{ textAlign: 'center' }}>Distribution of Most Frequent Mutations</div>
             <div style={{textAlign: 'right', marginRight: 50, marginLeft: 30}}>
               <Button
                 style={styles.button}

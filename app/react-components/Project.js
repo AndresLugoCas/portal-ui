@@ -20,7 +20,7 @@ import SummaryCard from './components/SummaryCard';
 import BarChart from './charts/BarChart';
 import theme from './theme';
 import OncoGridWrapper from './oncogrid/OncoGridWrapper';
-import SurvivalPlotWrapper from './components/SurvivalPlotWrapper';
+import SurvivalPlotWrapper, {SurvivalIcon} from './components/SurvivalPlotWrapper';
 import Button from './Button';
 import downloadSvg from './utils/download-svg';
 
@@ -322,6 +322,7 @@ const Project = ({
         </h1>
         <Row style={{paddingBottom: '2.5rem'}}>
           <span>
+            <div style={{ textAlign: 'center' }}>Distribution of Most Frequently Mutated Genes</div>
             <div style={{textAlign: 'right', marginRight: 50, marginLeft: 30}}>
               <Button
                 style={styles.button}
@@ -391,9 +392,10 @@ const Project = ({
                 },
                 { key: 'num_mutations', title: '# Mutations'},
                 {
-                  title: <i className="fa fa-bar-chart-o"><div style={styles.hidden}>add to survival plot</div></i>,
+                  title: 'Survival Analysis',
                   onClick: (d) => setSurvivalGene(survivalGene && d.geneSymbol === survivalGene.geneSymbol ? null : d),
-                  key: 'survivalAnalysis'
+                  key: 'survivalAnalysis',
+                  style: { width: 100 }
                 }
               ]}
               data={mutatedGenesChartData.map(g => ({
@@ -402,7 +404,7 @@ const Project = ({
                 survivalId: g.symbol,
                 num_affected_cases_project: `${g.num_affected_cases_project} / ${numCasesAggByProject[project.project_id]} (${(g.num_affected_cases_project/numCasesAggByProject[project.project_id]*100).toFixed(2)}%)`,
                 num_affected_cases_all: `${g.num_affected_cases_all} / ${totalNumCases} (${(g.num_affected_cases_all/totalNumCases * 100).toFixed(2)}%)`,
-                survivalAnalysis: <i className="fa fa-bar-chart-o" style={{ color: colors(survivalGene && survivalGene.geneSymbol === g.symbol ? 1 : 0) }}/>,
+                survivalAnalysis: <div style={{ textAlign: 'center' }} ><SurvivalIcon style={{ color: colors(survivalGene && survivalGene.geneSymbol === g.symbol ? 1 : 0) }} /></div>,
               }))}
             />
           }
