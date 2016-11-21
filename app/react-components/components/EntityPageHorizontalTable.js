@@ -55,7 +55,7 @@ const EntityPageHorizontalTable = ({ style, title, titleStyle, rightComponent, h
         <Table
           style={styles.table}
           headings={headings.map(h => (
-            <Th key={h.key || h.value}>
+            <Th key={h.key}>
               {h.tooltip && 
                 <Tooltip innerHTML={h.tooltip}>
                   {h.title}
@@ -80,10 +80,10 @@ const EntityPageHorizontalTable = ({ style, title, titleStyle, rightComponent, h
                     key={i}
                   >
                   {headings.map(h => {
-                    const value = typeof d[h.key] !== 'undefined' ? d[h.key] : h.value;
+                    const value = d[h.key];
 
                     return (
-                      <Td key={h.key || h.value} style={h.style || {}}>
+                      <Td key={h.key} style={h.style || {}}>
                         {h.color && <div className="item-color" style={{ backgroundColor: colors(i) }} />}
                         {h.onClick && value ? <a onClick={() => h.onClick(d)}>{value}</a> : (value || '--')}
                       </Td>

@@ -5,6 +5,7 @@ import FileIcon from 'react-icons/lib/fa/file-o';
 import CaseIcon from 'react-icons/lib/fa/user';
 import EditIcon from 'react-icons/lib/fa/edit';
 import _ from 'lodash';
+import { scaleOrdinal, schemeCategory10 } from 'd3';
 
 // Custom
 import Column from './uikit/Flex/Column';
@@ -22,6 +23,8 @@ import OncoGridWrapper from './oncogrid/OncoGridWrapper';
 import SurvivalPlotWrapper from './components/SurvivalPlotWrapper';
 import Button from './Button';
 import downloadSvg from './utils/download-svg';
+
+const colors = scaleOrdinal(schemeCategory10);
 
 const SPACING = '2rem';
 const HALF_SPACING = '1rem';
@@ -389,8 +392,8 @@ const Project = ({
                 { key: 'num_mutations', title: '# Mutations'},
                 {
                   title: <i className="fa fa-bar-chart-o"><div style={styles.hidden}>add to survival plot</div></i>,
-                  onClick: (d) => setSurvivalGene(d === survivalGene ? null : d),
-                  value: <i className="fa fa-bar-chart-o" />,
+                  onClick: (d) => setSurvivalGene(survivalGene && d.geneSymbol === survivalGene.geneSymbol ? null : d),
+                  key: 'survivalAnalysis'
                 }
               ]}
               data={mutatedGenesChartData.map(g => ({
@@ -399,6 +402,7 @@ const Project = ({
                 survivalId: g.symbol,
                 num_affected_cases_project: `${g.num_affected_cases_project} / ${numCasesAggByProject[project.project_id]} (${(g.num_affected_cases_project/numCasesAggByProject[project.project_id]*100).toFixed(2)}%)`,
                 num_affected_cases_all: `${g.num_affected_cases_all} / ${totalNumCases} (${(g.num_affected_cases_all/totalNumCases * 100).toFixed(2)}%)`,
+                survivalAnalysis: <i className="fa fa-bar-chart-o" style={{ color: colors(survivalGene && survivalGene.geneSymbol === g.symbol ? 1 : 0) }}/>,
               }))}
             />
           }
