@@ -173,7 +173,6 @@ let Mutation = (() => {
         '1': <PlusIcon />,
       };
 
-      console.log(mutation.consequence);
       const consequenceData = mutation.consequence.reduce((acc, c) => {
         const transcripts = [...new Set([...(acc[c.transcript.gene.gene_id] || { transcripts: [] }).transcripts, c.transcript.transcript_id])];
         let canonicalOnly = {};
@@ -196,7 +195,6 @@ let Mutation = (() => {
           }
         };
       }, {});
-      console.log(consequenceData);
 
       const consquenceDataMapped = Object.keys(consequenceData)
         .map(d => ({
